@@ -4,16 +4,15 @@
 
 # This image will be based on the official nodejs docker image
 #FROM node:latest
-FROM ubuntu:wily
+FROM debian:stable
 
-RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash - && \
-    apt-get install -y nodejs
+WORKDIR /home
 
 # Copy in the source
 COPY . /home/
- 
-# Set directory for npm/bower
-WORKDIR /home
+
+RUN ./install-node.sh && \
+    apt-get install -y nodejs
 
 # Install dependencies
 RUN npm install -g ts-node && \
